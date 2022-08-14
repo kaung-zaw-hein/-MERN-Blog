@@ -5,7 +5,9 @@ export default  (state = [], action) => {
     case 'CREATE':
         return [...state, action.payload ];
     case 'UPDATE':
-        return state.map((post) => post._id === action.payload._id ? action.payload : state);
+        return state.map((post) => (post._id === action.payload._id ? action.payload : post));
+    case 'DELETE':
+        return state.filter((post) => post._id !== action.payload);
     default: 
         return state;
 
