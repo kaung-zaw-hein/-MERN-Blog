@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
+import { useDispatch } from 'react-redux';
+import { gapi } from 'gapi-script';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
@@ -13,6 +15,18 @@ const Auth = () => {
   const [ showPassword, setShowPassword ] = useState(false);
   const [ isSignup, setIsSignup ] = useState(false);
   const [ confirmShowPassword, setConfirmShowPassword ] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: "852872154963-4jun7lln1lgni0eaniv45fn1f57dntoo.apps.googleusercontent.com",
+        scope: 'email',
+      });
+    }
+
+    gapi.load('client:auth2', start);
+  }, []);
 
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
@@ -28,12 +42,13 @@ const Auth = () => {
 
   const switchMode = () => setIsSignup((prevIsSignup) => !prevIsSignup);
 
-  const onSuccess = () => {
-
+  const googleSuccess = async (res) => {
+   console.log(res);
   };
 
-  const onFailure = () => {
-
+  const googleFailure = (error) => {
+    console.log(error);
+    console.log('Google Sign In was unsuccessful. Try Again Later');
   };
   
   return (
@@ -47,7 +62,7 @@ const Auth = () => {
                 <Grid container spacing={2}>
                     { isSignup && (
                         <>
-                            <Input name="firstName" label="First Name" handleChange={handleChange} autoFoucs half />
+                            <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
                             <Input name="firstName" label="First Name" handleChange={handleChange}  half />
                         </>
                     )}
@@ -55,8 +70,11 @@ const Auth = () => {
                     <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword}/>    
                     { isSignup && <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type={confirmShowPassword ? 'text' : 'password'} handleShowPassword={handleConfirmShowPassword} />} 
                 </Grid>
+                <Button type="submit" fullWidth variant='contained' color="primary" className={classes.submit} >
+                    {isSignup ? 'Sign Up' : 'Sign In'}
+                </Button>
                 <GoogleLogin 
-                    clientId='GOOGLE ID'
+                    clientId='852872154963-4jun7lln1lgni0eaniv45fn1f57dntoo.apps.googleusercontent.com'
                     render={(renderProps) => (
                         <Button 
                             className={classes.googleButton} 
@@ -71,11 +89,8 @@ const Auth = () => {
                     )}
                     onSuccess={googleSuccess}
                     onFailure={googleFailure}
-                    cookiePolicy="sing;e_host_origin"
+                    cookiePolicy="single_host_origin"
                 />
-                <Button type="submit" fullWidth variant='contained' color="primary" className={classes.submit} >
-                    {isSignup ? 'Sign Up' : 'Sign In'}
-                </Button>
                 <Grid container justifyContent='center'>
                     <Grid item>
                         <Button onClick={switchMode}>
