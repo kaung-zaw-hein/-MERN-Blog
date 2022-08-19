@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
 import Input from './Input';
 import Icon from './Icon';
+import { signin, signup } from '../../actions/auth';
+
+const initialState = { firstName:'', lastName:'', email:'', password:'', confirmPassword:''};
 
 const Auth = () => {
 
@@ -15,7 +19,9 @@ const Auth = () => {
   const [ showPassword, setShowPassword ] = useState(false);
   const [ isSignup, setIsSignup ] = useState(false);
   const [ confirmShowPassword, setConfirmShowPassword ] = useState(false);
+  const [ formData, setFormData ] = useState(initialState);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     function start() {
@@ -32,25 +38,41 @@ const Auth = () => {
 
   const handleConfirmShowPassword = () => setConfirmShowPassword((prevConfirmShowPassword) => !prevConfirmShowPassword);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if(isSignup){
+      dispatch(signup(formData, history));
+    }else{
+      dispatch(signin(formData, history));
+    }
 
   };
 
-  const handleChange = () => {
-
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const switchMode = () => setIsSignup((prevIsSignup) => !prevIsSignup);
 
   const googleSuccess = async (res) => {
-   console.log(res);
+   const result = res?.profileObj;
+   const token = res?.tokenId;
+
+   try{
+        dispatch({ type:'AUTH', data: { result, token }});
+        history.push('/');
+   } catch(error){
+        console.log(error);
+   }
+
   };
 
   const googleFailure = (error) => {
     console.log(error);
     console.log('Google Sign In was unsuccessful. Try Again Later');
   };
-  
+   
   return (
     <Container component="main" maxWidth="xs">
         <Paper className={classes.paper} elevation={3}>
