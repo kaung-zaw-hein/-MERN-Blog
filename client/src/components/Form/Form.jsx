@@ -8,11 +8,11 @@ import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
 
 const Form = ({ currentId, setCurrentId }) => {
-  const [ postData, setPostData ] = useState({ title:'', message:'', tags:'', selectedFile:''}); 
-  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId ) : null );
-  const classes = useStyles();
+  const [ postData, setPostData ] = useState({ title:'', message:'', tags:[], selectedFile:''}); 
+  const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile'));
+  const classes = useStyles();
 
   useEffect(() => {
     
@@ -35,7 +35,7 @@ const Form = ({ currentId, setCurrentId }) => {
     
     const clear= () => {
       setCurrentId(0);
-      setPostData({ title: '', message: '', tags: '', selectedFile: '' });
+      setPostData({ title: '', message: '', tags: [], selectedFile: '' });
     };
     
     if(!user?.result?.name) {
@@ -55,7 +55,6 @@ const Form = ({ currentId, setCurrentId }) => {
     const handleDeleteChip = (chipToDelete) => {
       setPostData({ ...postData, tags: postData.tags.filter((tag) => tag !== chipToDelete) });
     };
-  
 
   return (
     <Paper className={classes.paper} elevation={6}>
@@ -72,7 +71,7 @@ const Form = ({ currentId, setCurrentId }) => {
             value={postData.tags}
             onAdd={(chip) => handleAddChip(chip)}
             onDelete={(chip) => handleDeleteChip(chip)}
-        />
+          />
         </div>
         <div className={classes.fileInput}><FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} /></div>
         <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>

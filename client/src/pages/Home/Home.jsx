@@ -41,7 +41,7 @@ const Home = () => {
         searchPost();
       }
     }
-
+    
     const handleAddChip = (tag) => setTags([...tags, tag]);
 
     const handleDeleteChip = (chipToDelete) => setTags(tags.filter((tag) => tag !== chipToDelete));
