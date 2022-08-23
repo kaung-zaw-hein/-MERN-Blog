@@ -16,6 +16,10 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use("/user", userRouter);
 
+app.get('/', (req, res) => {
+  res.send('APP IS RUNNING');
+})
+
 const CONNECTION_URL = 'mongodb+srv://kzh:1963@nasacluster.gsndy.mongodb.net/shareMe';
 const PORT = process.env.PORT|| 5000;
 
