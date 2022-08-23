@@ -11,7 +11,7 @@ const Input = ({ half, name, handleChange, label, type, handleShowPassword  }) =
         name={ name } 
         label={label}
         onChange={handleChange} 
-        variant="outlined"
+        variant="standard"
         required
         fullWidth
         type={type}

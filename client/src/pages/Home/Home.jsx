@@ -49,29 +49,29 @@ const Home = () => {
   return (
     <Grow in>
         <Container maxWidth="xl">
-            <Grid className={classes.mainContainer} container justifyContent="center" alignItems="stretch" spacing={3}>
+            <Grid container className={classes.gridContainer} justifyContent="center" alignItems="stretch" spacing={3}>
                 <Grid item xs={12} sm={6} md={9}>
                     <Posts setCurrentId={setCurrentId} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <AppBar className={classes.appBarSearch} position="static" color="inherit">
                        <TextField 
-                       name="search"
-                       variant="outlined"
-                       label="Search Memories"
-                       onKeyPress={handleKeyPress}
-                       fullWidth
-                       value={search}
-                       onChange={(e) => setSearch(e.target.value)}
-                      />
-                      <ChipInput
-                        style={{ margin: '10px 0' }}
-                        value={tags}
-                        onAdd={(chip) => handleAddChip(chip)}
-                        onDelete={(chip) => handleDeleteChip(chip)}
-                        label="Search Tags"
-                        variant="outlined"
-                      />
+                          name="search"
+                          variant="standard"
+                          label="Search Blogs"
+                          onKeyPress={handleKeyPress}
+                          fullWidth
+                          value={search}
+                          onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <ChipInput
+                          style={{ margin: '10px 0' }}
+                          value={tags}
+                          onAdd={(chip) => handleAddChip(chip)}
+                          onDelete={(chip) => handleDeleteChip(chip)}
+                          label="Search Tags"
+                          variant="standard"
+                        />
                       <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
                     </AppBar>
                     <Form currentId={currentId} setCurrentId={setCurrentId} />

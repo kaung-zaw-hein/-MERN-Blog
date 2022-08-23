@@ -6,6 +6,13 @@ export default makeStyles((theme) => ({
     marginBottom: '1rem',
     display: 'flex',
     padding: '16px',
+    backgroundColor:"#fff",
+  },
+  searchButton:{
+    backgroundColor:"#121212",
+    '&:hover': {
+      background: "#3d3d3d",
+   },
   },
   pagination: {
     borderRadius: 4,

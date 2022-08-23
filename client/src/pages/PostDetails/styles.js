@@ -13,42 +13,51 @@ export default makeStyles((theme) => ({
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
-      flexDirection: 'column',
+      flexDirection: 'column-reverse',
     },
   },
   section: {
+    width: '50%',
     borderRadius: '20px',
     margin: '10px',
-    flex: 1,
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
+  section1: {
+    width: '100%',
   },
   imageSection: {
     marginLeft: '20px',
+    width: '50%',
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
+      width: '100%',
     },
   },
   recommendedPosts: {
     display: 'flex',
-    flexWrap:'noWrap',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-    },
+    flexWrap:'wrap',
+    flexDirection: 'column',
   },
   loadingPaper: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '20px',
-    borderRadius: '15px',
-    height: '39vh',
+    background:'transparent',
+    height: '60vh',
   },
   commentsOuterContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    width:"100%",
+    paddingTop:"20px"
   },
   commentsInnerContainer: {
     height: '200px',
     overflowY: 'auto',
     marginRight: '30px',
+    width:"40%",
   },
 }));
