@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
     padding:"0",
     background:"#EDEDED",
     [theme.breakpoints.down('xs')]: {
-      width:"335px"
+      width:"100%",
     },
   },
   overlay: {
